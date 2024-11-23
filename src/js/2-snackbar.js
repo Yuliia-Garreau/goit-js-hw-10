@@ -1,9 +1,9 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import iconResolve from '../img/ok.png';
-import iconReject from '..//img/error.png';
+import iconReject from '../img/error.png';
 
-const form = document.querySelector('.form');
+const form = document.querySelector('form');
 const inputDelay = document.querySelector("input[name='delay']");
 const inputFulfilled = document.querySelector("input[value='fulfilled']");
 const inputRejected = document.querySelector("input[value='rejected']");
@@ -26,23 +26,18 @@ form.addEventListener('submit', handleSubmit);
 function handleSubmit(event) {
   event.preventDefault();
   const delay = event.target.elements.delay.value;
-  console.log(delay);
 
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      const selectedBtnFulfilled = document.querySelector(
-        "input[value='fulfilled']:checked"
-      );
-      const selectedBtnRej = document.querySelector(
-        "input[value='rejected']:checked"
-      );
-      if (selectedBtnFulfilled) {
+      const selectedBtnFulfilled = event.target.elements.state;
+      if (selectedBtnFulfilled.value === 'fulfilled') {
         resolve(`Fulfilled promise in ${delay} ms`);
       } else {
         reject(`Rejected promise in ${delay} ms`);
       }
     }, delay);
   });
+
   promise
     .then(result => {
       iziToast.success({
@@ -66,5 +61,4 @@ function handleSubmit(event) {
         titleColor: '#fff',
       });
     });
-  form.res();
 }
