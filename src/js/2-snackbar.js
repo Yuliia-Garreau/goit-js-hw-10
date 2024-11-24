@@ -26,11 +26,11 @@ form.addEventListener('submit', handleSubmit);
 function handleSubmit(event) {
   event.preventDefault();
   const delay = event.target.elements.delay.value;
+  const selectedBtnFulfilled = event.target.elements.state.value;
 
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      const selectedBtnFulfilled = event.target.elements.state;
-      if (selectedBtnFulfilled.value === 'fulfilled') {
+      if (selectedBtnFulfilled === 'fulfilled') {
         resolve(`Fulfilled promise in ${delay} ms`);
       } else {
         reject(`Rejected promise in ${delay} ms`);
@@ -60,5 +60,6 @@ function handleSubmit(event) {
         messageColor: '#fff',
         titleColor: '#fff',
       });
-    });
+    })
+    .finally(() => form.reset());
 }
